@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-
+import { thunkGetPokemons } from "../thunk/Middleware";
 interface Pokemon {
   name: string;
   url: string;
@@ -28,6 +28,12 @@ export const pokemonSlice = createSlice({
     allPokemons: (state, action: PayloadAction<any>) => {
       state.allPokemons.push(action.payload);
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(thunkGetPokemons.fulfilled, (state,action) => {})
+      .addCase("", () => {})
+      .addCase("", () => {});
   },
 });
 
