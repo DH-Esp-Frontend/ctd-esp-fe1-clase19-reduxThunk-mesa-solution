@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { thunkGetPokemons } from "../thunk/Middleware";
+import {
+  thunkGetPokemons,
+  thunkSearchPokemon,
+  thunkGetAnPokemon,
+} from "../thunk/Middleware";
 interface Pokemon {
   name: string;
   url: string;
@@ -31,8 +35,12 @@ export const pokemonSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(thunkGetPokemons.fulfilled, (state,action) => {})
-      .addCase("", () => {})
+      .addCase(thunkGetPokemons.fulfilled, (state, action) => {
+        state.allPokemons.push(action.payload);
+      })
+      .addCase(thunkGetAnPokemon.fulfilled, (state, action) => {
+        state.search = action.payload;
+      })
       .addCase("", () => {});
   },
 });
