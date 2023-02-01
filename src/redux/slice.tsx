@@ -23,11 +23,7 @@ const initialState: PokemonsState = {
 export const pokemonSlice = createSlice({
   name: "pokemons",
   initialState,
-  reducers: {
-    filterName:((state,action)=>{
-      state.allPokemons = action.payload;
-    })
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(
@@ -37,7 +33,6 @@ export const pokemonSlice = createSlice({
           state.loading = false;
         }
       )
-      
       .addCase( thunkGetPokemons.pending,(state, _action) => { state.loading = false; } )
       .addCase(
         thunkGetAnPokemon.fulfilled,
@@ -48,5 +43,4 @@ export const pokemonSlice = createSlice({
   },
 });
 
-export const { filterName } = pokemonSlice.actions;
 export default pokemonSlice.reducer;

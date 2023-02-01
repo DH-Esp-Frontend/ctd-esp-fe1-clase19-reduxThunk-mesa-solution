@@ -20,17 +20,3 @@ export const thunkGetAnPokemon = createAsyncThunk(
   }
 );
     
-    export const thunkSearchPokemon = createAsyncThunk(
-      "pokemons/thunkSearchPokemon",
-      async (pokemonName:string) => {
-        const data = thunkGetPokemons();
-        const result = await filterFunction(data, pokemonName);
-        return result;
-      }
-    );
-    
-    const filterFunction =(data:any,pokemonName:any)=>{
-      return data.filter((pokemon:any) =>
-            pokemon.name.toLowerCase().startsWith(pokemonName.toLowerCase())
-          );
-    }

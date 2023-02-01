@@ -32,11 +32,5 @@ const ListadoPokemonsItem = () => {
   );
 };
 
-ListadoPokemonsItem.propTypes = {
-  pokemon: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-  }),
-};
 
 export default ListadoPokemonsItem;
