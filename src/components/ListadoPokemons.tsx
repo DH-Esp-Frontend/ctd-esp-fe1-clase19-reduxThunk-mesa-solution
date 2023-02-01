@@ -1,37 +1,23 @@
 import React, { useEffect } from "react";
 import ListadoPokemonsItem from "../components/ListadoPokemonsItem";
-import { buscarPokemons } from "../queries/pokemon.queries";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
-import { useQuery } from "react-query";
-import { allPokemons } from "../redux/slice";
+import { thunkGetPokemons } from "../thunk/Middleware";
+import { AppDispatch } from "../redux/store";
 
-/*
-
-*/
 const ListadoPokemons = () => {
-  const pokemonSearch = useSelector((state: RootState) => state.search);
+  const { loading,allPokemons } = useSelector(( state: RootState ) => state );
+  const dispatch:AppDispatch = useDispatch();
 
-  const dispatch = useDispatch();
 
-  const {
-    data: pokemons,
-    isLoading,
-    refetch,
-  } = useQuery("obtenerPokemons", () => buscarPokemons(pokemonSearch));
-  /*
-  Utilizamos el useEffect y fetchPokemon para guardar en Redux todos 
-  los pokemons que nos devuelve useQuery
-  */
+  const fetchPokemon = () => dispatch( thunkGetPokemons() );
 
-  const fetchPokemon = () => pokemons && dispatch(allPokemons(pokemons));
 
   useEffect(() => {
-    if (pokemonSearch) refetch();
-    fetchPokemon();
-  }, [pokemonSearch, pokemons]);
+    if (allPokemons.length == 0) fetchPokemon();
+  }, []);
 
-  if (isLoading) return <div> Loading... </div>;
+  if (loading) return <div> Loading... </div>;
 
   return <ListadoPokemonsItem />;
 }

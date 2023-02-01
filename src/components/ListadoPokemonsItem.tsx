@@ -1,9 +1,6 @@
-
-import React from "react";
-import PropTypes from "prop-types";
 import { extractPokemonId } from "../services/pokemon.services";
 import { useDispatch, useSelector } from "react-redux";
-import { searchAnPokemon } from "../redux/slice";
+import { thunkGetAnPokemon } from "../thunk/Middleware";
 import { RootState, AppDispatch } from "../redux/store";
 
 
@@ -21,7 +18,7 @@ const ListadoPokemonsItem = () => {
           return (
             <div
               id="listadoCategorias"
-              onClick={() => dispatch(searchAnPokemon(pokemon?.name))}
+              onClick={() => dispatch(thunkGetAnPokemon(pokemon?.name))}
             >
               <strong>{pokemon?.name}</strong>
               <small> #{extractPokemonId(pokemon?.url)}</small>
@@ -32,11 +29,5 @@ const ListadoPokemonsItem = () => {
   );
 };
 
-ListadoPokemonsItem.propTypes = {
-  pokemon: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-  }),
-};
 
 export default ListadoPokemonsItem;

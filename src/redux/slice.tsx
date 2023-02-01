@@ -1,42 +1,46 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { thunkGetPokemons } from "../thunk/Middleware";
-interface Pokemon {
-  name: string;
-  url: string;
-}
-export interface PokemonsState {
+import { thunkGetPokemons, thunkGetAnPokemon } from "../thunk/Middleware";
+import { PokemonsState,Pokemon } from "../types/pokemon.types";
 
-  search: string;
-  pokemon: Pokemon;
-  allPokemons: any[];
-}
+let other = { home:{ front_default:"" } };
+let stats = { base_stat: 0, stat: { name: "" } };
+let type = { type: { name: "" } };
+
 const initialState: PokemonsState = {
- 
-  search: "",
-  pokemon: { name: "", url: "" },
+  search: { 
+  name: "",
+  url: "",
+  id:0, 
+  sprites:{other}, 
+  stats:[stats], 
+  types:[type]
+},
   allPokemons: [],
+  loading: false,
 };
 
 export const pokemonSlice = createSlice({
   name: "pokemons",
   initialState,
-  reducers: {
-    searchAnPokemon: (state, action: PayloadAction<string>) => {
-      state.search = action.payload;
-    },
-    allPokemons: (state, action: PayloadAction<any>) => {
-      state.allPokemons.push(action.payload);
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(thunkGetPokemons.fulfilled, (state,action) => {})
-      .addCase("", () => {})
-      .addCase("", () => {});
+      .addCase(
+        thunkGetPokemons.fulfilled,
+        (state, action: PayloadAction<Pokemon[]>) => {
+          state.allPokemons.push(action.payload);
+          state.loading = false;
+        }
+      )
+      .addCase( thunkGetPokemons.pending,(state, _action) => { state.loading = false; } )
+      .addCase(
+        thunkGetAnPokemon.fulfilled,
+        (state, action: PayloadAction<Pokemon>) => {
+          state.search = action.payload;
+        }
+      );
   },
 });
-
-export const { allPokemons, searchAnPokemon } = pokemonSlice.actions;
 
 export default pokemonSlice.reducer;

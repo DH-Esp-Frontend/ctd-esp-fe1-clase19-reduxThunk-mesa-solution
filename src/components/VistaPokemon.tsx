@@ -1,28 +1,29 @@
-import React, { useEffect} from "react";
-import { useQuery } from "react-query";
-import { getPokemon} from "../queries/pokemon.queries";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
 
 const VistaPokemon = () => {
 
-  const pokemonSelec = useSelector((state: RootState) => state.search);
-  const {data: pokemon, isLoading, refetch} = useQuery("obtenerPokemon",() => getPokemon(pokemonSelec || ""),);
+  const { search,loading } = useSelector(( state: RootState ) => state);
+  const { name, types, sprites, stats } = search;
+  const { other:{ home:{ front_default } } } = sprites;
+  
+  if (loading) return <div>Loading...</div>;
 
-  useEffect(() => {
-    if (pokemonSelec) {
-      refetch();
-    }
-  }, [ pokemonSelec]);
-
-  if (isLoading) return <div>Loading</div>;
-
-  return pokemon ? (
+  return search.name ? (
     <div className="vistaPokemon">
-      <h4>Pokemon: {pokemon.name}</h4>
-      <h5>#{pokemon.id}</h5>
-      <img src={pokemon.sprites.other.home.front_default} alt={pokemon.name} />
+      <h4 className="pokemonName">
+        {name.toUpperCase()} #{search.id}
+      </h4>
+      {types.map(({ type: { name } }) => (
+        <span className={`typeName ${name}`}>{name.toUpperCase()}</span>
+      ))}
+      <img src={front_default} alt={name} />
+      {stats.map(({ stat: { name }, base_stat }) => (
+        <p>
+          <span>{name}:</span> {base_stat}
+        </p>
+      ))}
     </div>
   ) : null;
 }
