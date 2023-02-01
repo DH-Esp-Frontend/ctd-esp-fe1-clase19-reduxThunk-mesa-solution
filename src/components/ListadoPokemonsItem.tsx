@@ -1,6 +1,3 @@
-
-import React from "react";
-import PropTypes from "prop-types";
 import { extractPokemonId } from "../services/pokemon.services";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetAnPokemon } from "../thunk/Middleware";

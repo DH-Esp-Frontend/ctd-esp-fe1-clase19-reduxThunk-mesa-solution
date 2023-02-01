@@ -1,6 +1,5 @@
-
 interface Sprite{
-    other:{home:{front_default:string}};
+    other:{ home:{ front_default:string }};
 }
 export interface PokemonWithProps extends Pokemon{
     id: number;
