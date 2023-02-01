@@ -1,7 +1,7 @@
 {
-  "name": "ctd-esp-fe1-clase17-redux-solution",
+  "name": "ctd-esp-fe1-clase19-redux",
   "version": "1.0.0",
-  "description": "Frontend IV: Clase 16: Redux - Mesa de Trabajo",
+  "description": "ctd-esp-fe1-clase19-reduxThunk-solution",
   "private": true,
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
     "de",
     "Trabajo"
   ],
-  "author": "Tomas de Priede",
+  "author": "Nahuel Rojas",
   "license": "MIT",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
